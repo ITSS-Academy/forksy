@@ -1,0 +1,16 @@
+.app-container {
+  height: 100vh;
+}
+
+.main-content {
+  padding: 16px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: calc(100vh - 64px); // Adjust if nav-bar height changes
+}
+
+@media (max-width: 600px) {
+  .main-content {
+    padding: 8px;
+  }
+}

@@ -1,0 +1,39 @@
+<mat-toolbar color="primary" class="navbar">
+  <span class="logo">
+   <img src="logo.png"/>
+    Forksy
+  </span>
+  <span class="spacer"></span>
+  <nav class="nav-links">
+    <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a mat-button routerLink="/search-recipe" routerLinkActive="active">Search</a>
+    <a mat-button routerLink="/about" routerLinkActive="active">About Us</a>
+    @if (isLoggedIn) {
+
+      <a mat-button routerLink="/chat" routerLinkActive="active">Message</a>
+      <a mat-button routerLink="/my-recipe" routerLinkActive="active">My Recipe</a>
+      <a mat-button routerLink="/my-favorite-recipe" routerLinkActive="active">My Favourite</a>
+
+      <!-- Avatar with dropdown menu -->
+      <button mat-icon-button [matMenuTriggerFor]="userMenu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item routerLink="/profile">
+          <mat-icon>person</mat-icon>
+          <span>Profile</span>
+        </button>
+        <button mat-menu-item routerLink="/settings">
+          <mat-icon>settings</mat-icon>
+          <span>Setting</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    } @else {
+      <button mat-raised-button color="accent" (click)="login()">Login</button>
+    }
+  </nav>
+</mat-toolbar>
