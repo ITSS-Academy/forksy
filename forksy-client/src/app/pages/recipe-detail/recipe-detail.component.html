@@ -1,1 +1,258 @@
-<p>recipe-detail works!</p>
+<div class="recipe-detail-container" *ngIf="recipe">
+  <!-- Header với nút quay lại -->
+  <div class="recipe-header">
+    <button mat-icon-button class="back-button" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1 class="recipe-title">{{ recipe.title }}</h1>
+  </div>
+
+  <!-- Ảnh/Video chính -->
+  <div class="main-media-section">
+    <div class="main-image-container">
+      <img [src]="recipe.mainImage" [alt]="recipe.title" class="main-image">
+      <div class="play-button-overlay" *ngIf="recipe.videoUrl">
+        <button mat-fab color="primary" class="play-button">
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thông tin món ăn -->
+  <mat-card class="recipe-info-card">
+    <div class="recipe-info-header">
+      <div class="recipe-basic-info">
+        <h2 class="recipe-subtitle">{{ recipe.description }}</h2>
+        
+        <div class="recipe-meta-grid">
+          <div class="meta-item">
+            <mat-icon>person</mat-icon>
+            <span class="meta-label">Tác giả:</span>
+            <span class="meta-value">{{ recipe.author }}</span>
+          </div>
+          <div class="meta-item">
+            <mat-icon>schedule</mat-icon>
+            <span class="meta-label">Thời gian:</span>
+            <span class="meta-value">{{ recipe.cookingTime }}</span>
+          </div>
+          <div class="meta-item">
+            <mat-icon>people</mat-icon>
+            <span class="meta-label">Khẩu phần:</span>
+            <span class="meta-value">{{ recipe.servings }} người</span>
+          </div>
+          <div class="meta-item">
+            <mat-icon>trending_up</mat-icon>
+            <span class="meta-label">Độ khó:</span>
+            <span class="meta-value">{{ recipe.difficulty }}</span>
+          </div>
+        </div>
+
+        <!-- Rating -->
+        <div class="rating-section">
+          <div class="current-rating">
+            <span class="rating-score">{{ recipe.rating }}</span>
+            <div class="rating-stars">
+              <mat-icon 
+                *ngFor="let star of [1,2,3,4,5]" 
+                [class.filled]="star <= recipe.rating"
+                [class.half-filled]="star === Math.ceil(recipe.rating) && recipe.rating % 1 !== 0">
+                {{ star <= recipe.rating ? 'star' : 'star_border' }}
+              </mat-icon>
+            </div>
+            <span class="rating-count">({{ recipe.totalRatings }} đánh giá)</span>
+          </div>
+          
+          <div class="user-rating">
+            <span class="rating-label">Đánh giá của bạn:</span>
+            <div class="rating-stars interactive">
+              <mat-icon 
+                *ngFor="let star of [1,2,3,4,5]" 
+                [class.filled]="star <= (hoverRating || userRating)"
+                (click)="setRating(star)"
+                (mouseenter)="onRatingHover(star)"
+                (mouseleave)="onRatingLeave()">
+                {{ star <= (hoverRating || userRating) ? 'star' : 'star_border' }}
+              </mat-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nút tương tác -->
+      <div class="interaction-buttons">
+        <button mat-raised-button 
+                [color]="recipe.isFavorite ? 'warn' : 'primary'"
+                (click)="toggleFavorite()"
+                class="interaction-btn">
+          <mat-icon>{{ recipe.isFavorite ? 'favorite' : 'favorite_border' }}</mat-icon>
+          {{ recipe.isFavorite ? 'Đã yêu thích' : 'Yêu thích' }}
+        </button>
+        
+        <button mat-raised-button 
+                [color]="recipe.isSaved ? 'accent' : 'primary'"
+                (click)="toggleSaved()"
+                class="interaction-btn">
+          <mat-icon>{{ recipe.isSaved ? 'bookmark' : 'bookmark_border' }}</mat-icon>
+          {{ recipe.isSaved ? 'Đã lưu' : 'Lưu lại' }}
+        </button>
+
+        <div class="share-dropdown">
+          <button mat-raised-button color="primary" [matMenuTriggerFor]="shareMenu" class="interaction-btn">
+            <mat-icon>share</mat-icon>
+            Chia sẻ
+          </button>
+          <mat-menu #shareMenu="matMenu">
+            <button mat-menu-item (click)="shareRecipe('facebook')">
+              <mat-icon>facebook</mat-icon>
+              Facebook
+            </button>
+            <button mat-menu-item (click)="shareRecipe('zalo')">
+              <mat-icon>chat</mat-icon>
+              Zalo
+            </button>
+            <button mat-menu-item (click)="shareRecipe('twitter')">
+              <mat-icon>twitter</mat-icon>
+              Twitter
+            </button>
+            <button mat-menu-item (click)="shareRecipe('copy')">
+              <mat-icon>content_copy</mat-icon>
+              Sao chép link
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- Tabs chính -->
+  <mat-card class="tabs-card">
+    <mat-tab-group [(selectedIndex)]="selectedTabIndex" animationDuration="300ms">
+      
+      <!-- Tab Nguyên liệu -->
+      <mat-tab label="Nguyên liệu">
+        <div class="tab-content">
+          <div class="ingredients-header">
+            <h3>Danh sách nguyên liệu</h3>
+            <p>Đánh dấu những nguyên liệu bạn đã chuẩn bị</p>
+          </div>
+          
+          <div class="ingredients-grid">
+            <div class="ingredient-item" *ngFor="let ingredient of recipe.ingredients">
+              <mat-checkbox 
+                [checked]="ingredient.isPrepared"
+                (change)="toggleIngredient(ingredient)"
+                class="ingredient-checkbox">
+              </mat-checkbox>
+              <div class="ingredient-info">
+                <span class="ingredient-name" [class.prepared]="ingredient.isPrepared">
+                  {{ ingredient.name }}
+                </span>
+                <span class="ingredient-amount">{{ ingredient.amount }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Tab Các bước -->
+      <mat-tab label="Các bước">
+        <div class="tab-content">
+          <div class="steps-header">
+            <h3>Hướng dẫn nấu</h3>
+            <p>Làm theo từng bước để có món ăn hoàn hảo</p>
+          </div>
+          
+          <mat-stepper orientation="vertical" class="recipe-stepper">
+            <mat-step *ngFor="let step of recipe.steps; let i = index">
+              <ng-template matStepLabel>
+                <div class="step-label">
+                  <span class="step-number">{{ i + 1 }}</span>
+                  <span class="step-title">Bước {{ i + 1 }}</span>
+                  <span class="step-time" *ngIf="step.time">{{ step.time }}</span>
+                </div>
+              </ng-template>
+              
+              <div class="step-content">
+                <div class="step-description">
+                  <p>{{ step.description }}</p>
+                </div>
+                <div class="step-image" *ngIf="step.image">
+                  <img [src]="step.image" [alt]="'Bước ' + (i + 1)" class="step-img">
+                </div>
+              </div>
+            </mat-step>
+          </mat-stepper>
+        </div>
+      </mat-tab>
+
+      <!-- Tab Dinh dưỡng -->
+      <mat-tab label="Dinh dưỡng">
+        <div class="tab-content">
+          <div class="nutrition-header">
+            <h3>Thông tin dinh dưỡng</h3>
+            <p>Giá trị dinh dưỡng cho {{ recipe.servings }} khẩu phần</p>
+          </div>
+          
+          <div class="nutrition-grid">
+            <div class="nutrition-item">
+              <div class="nutrition-icon">
+                <mat-icon>local_fire_department</mat-icon>
+              </div>
+              <div class="nutrition-info">
+                <span class="nutrition-value">{{ recipe.nutrition.calories }}</span>
+                <span class="nutrition-label">Calories</span>
+              </div>
+            </div>
+            
+            <div class="nutrition-item">
+              <div class="nutrition-icon">
+                <mat-icon>fitness_center</mat-icon>
+              </div>
+              <div class="nutrition-info">
+                <span class="nutrition-value">{{ recipe.nutrition.protein }}g</span>
+                <span class="nutrition-label">Protein</span>
+              </div>
+            </div>
+            
+            <div class="nutrition-item">
+              <div class="nutrition-icon">
+                <mat-icon>grain</mat-icon>
+              </div>
+              <div class="nutrition-info">
+                <span class="nutrition-value">{{ recipe.nutrition.carbs }}g</span>
+                <span class="nutrition-label">Carbohydrates</span>
+              </div>
+            </div>
+            
+            <div class="nutrition-item">
+              <div class="nutrition-icon">
+                <mat-icon>opacity</mat-icon>
+              </div>
+              <div class="nutrition-info">
+                <span class="nutrition-value">{{ recipe.nutrition.fat }}g</span>
+                <span class="nutrition-label">Chất béo</span>
+              </div>
+            </div>
+            
+            <div class="nutrition-item">
+              <div class="nutrition-icon">
+                <mat-icon>eco</mat-icon>
+              </div>
+              <div class="nutrition-info">
+                <span class="nutrition-value">{{ recipe.nutrition.fiber }}g</span>
+                <span class="nutrition-label">Chất xơ</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>
+
+<!-- Loading state -->
+<div *ngIf="!recipe" class="loading-container">
+  <mat-spinner></mat-spinner>
+  <p>Đang tải thông tin món ăn...</p>
+</div>

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import {RouterLink, RouterLinkActive} from '@angular/router';
-import {MaterialModule} from '../../shared/material.module';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { MaterialModule } from '../../shared/material.module';
 
 @Component({
   selector: 'app-nav-bar',
+  standalone: true,
   imports: [
     RouterLink,
     RouterLinkActive,

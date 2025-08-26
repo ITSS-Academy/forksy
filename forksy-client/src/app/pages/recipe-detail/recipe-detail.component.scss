@@ -1,0 +1,555 @@
+.recipe-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fafafa;
+  min-height: 100vh;
+}
+
+.recipe-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.back-button {
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.recipe-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  flex: 1;
+}
+
+// Ảnh/Video chính
+.main-media-section {
+  margin-bottom: 30px;
+}
+
+.main-image-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.play-button-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.play-button {
+  width: 80px;
+  height: 80px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  
+  mat-icon {
+    font-size: 2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+// Thông tin món ăn
+.recipe-info-card {
+  margin-bottom: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.recipe-info-header {
+  padding: 30px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.recipe-basic-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.recipe-subtitle {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #555;
+  margin: 0;
+  font-weight: 400;
+}
+
+.recipe-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  border-left: 4px solid #835400;
+  
+  mat-icon {
+    color: #835400;
+    font-size: 1.2rem;
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+}
+
+.meta-label {
+  font-weight: 600;
+  color: #835400;
+  font-size: 0.9rem;
+}
+
+.meta-value {
+  font-weight: 600;
+  color: #333;
+  margin-left: auto;
+}
+
+// Rating section
+.rating-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.current-rating {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.rating-score {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #835400;
+}
+
+.rating-stars {
+  display: flex;
+  gap: 4px;
+  
+  mat-icon {
+    color: #ddd;
+    font-size: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    
+    &.filled {
+      color: #ffc107;
+    }
+    
+    &.half-filled {
+      color: #ffc107;
+    }
+  }
+  
+  &.interactive {
+    cursor: pointer;
+    
+    mat-icon {
+      transition: color 0.2s ease;
+      
+      &:hover {
+        color: #ffc107;
+      }
+    }
+  }
+}
+
+.rating-count {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.user-rating {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.rating-label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+// Nút tương tác
+.interaction-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+}
+
+.interaction-btn {
+  padding: 16px 24px;
+  border-radius: 25px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+  
+  mat-icon {
+    margin-right: 8px;
+  }
+}
+
+.share-dropdown {
+  position: relative;
+}
+
+// Tabs
+.tabs-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.tab-content {
+  padding: 30px;
+}
+
+// Tab Nguyên liệu
+.ingredients-header {
+  text-align: center;
+  margin-bottom: 30px;
+  
+  h3 {
+    font-size: 1.8rem;
+    color: #333;
+    margin: 0 0 10px 0;
+  }
+  
+  p {
+    color: #666;
+    margin: 0;
+  }
+}
+
+.ingredients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.ingredient-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  border-left: 4px solid #835400;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: #fff3e0;
+    transform: translateX(4px);
+  }
+}
+
+.ingredient-checkbox {
+  flex-shrink: 0;
+}
+
+.ingredient-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ingredient-name {
+  font-weight: 600;
+  color: #333;
+  font-size: 1.1rem;
+  
+  &.prepared {
+    text-decoration: line-through;
+    color: #888;
+  }
+}
+
+.ingredient-amount {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+// Tab Các bước
+.steps-header {
+  text-align: center;
+  margin-bottom: 30px;
+  
+  h3 {
+    font-size: 1.8rem;
+    color: #333;
+    margin: 0 0 10px 0;
+  }
+  
+  p {
+    color: #666;
+    margin: 0;
+  }
+}
+
+.recipe-stepper {
+  ::ng-deep {
+    .mat-stepper-vertical {
+      background: transparent;
+    }
+    
+    .mat-step-header {
+      padding: 20px 0;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      
+      &:hover {
+        background-color: #f8f9fa;
+      }
+    }
+    
+    .mat-step-label {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    
+    .mat-step-content {
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 12px;
+      margin-left: 20px;
+    }
+  }
+}
+
+.step-label {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #835400;
+  color: white;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.step-title {
+  font-weight: 600;
+  color: #333;
+}
+
+.step-time {
+  margin-left: auto;
+  background-color: #835400;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.step-content {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: start;
+}
+
+.step-description {
+  p {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333;
+  }
+}
+
+.step-image {
+  width: 200px;
+  height: 150px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+  
+  .step-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// Tab Dinh dưỡng
+.nutrition-header {
+  text-align: center;
+  margin-bottom: 30px;
+  
+  h3 {
+    font-size: 1.8rem;
+    color: #333;
+    margin: 0 0 10px 0;
+  }
+  
+  p {
+    color: #666;
+    margin: 0;
+  }
+}
+
+.nutrition-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.nutrition-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  background-color: #f8f9fa;
+  border-radius: 16px;
+  text-align: center;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.nutrition-icon {
+  mat-icon {
+    font-size: 2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: #835400;
+  }
+}
+
+.nutrition-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nutrition-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.nutrition-label {
+  font-size: 0.9rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+// Loading
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  gap: 20px;
+  
+  p {
+    font-size: 1.2rem;
+    color: #666;
+    margin: 0;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .recipe-detail-container {
+    padding: 16px;
+  }
+  
+  .recipe-title {
+    font-size: 2rem;
+  }
+  
+  .main-image-container {
+    height: 300px;
+  }
+  
+  .recipe-info-header {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .recipe-meta-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .ingredients-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .nutrition-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .step-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .step-image {
+    width: 100%;
+    height: 200px;
+  }
+  
+  .interaction-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .interaction-btn {
+    flex: 1;
+    min-width: 120px;
+  }
+}
+
