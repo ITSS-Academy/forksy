@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MaterialModule } from '../../shared/material.module';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AuthState } from '../../ngrx/auth/auth.state';
+import * as AuthActions from '../../ngrx/auth/auth.actions';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,23 +13,25 @@ import { MaterialModule } from '../../shared/material.module';
   imports: [
     RouterLink,
     RouterLinkActive,
-    MaterialModule
+    MaterialModule,
+    AsyncPipe
   ],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss'
 })
 export class NavBarComponent {
-  isLoggedIn = localStorage.getItem('loggedIn') === 'true';
+  auth$: Observable<AuthState>;
+
+  constructor(private store: Store<{ auth: AuthState }>) {
+    this.auth$ = this.store.select('auth');
+  }
 
   login() {
-    localStorage.setItem('loggedIn', 'true');
-    this.isLoggedIn = true;
-    alert('Đăng nhập thành công!');
+    this.store.dispatch(AuthActions.login());
   }
 
   logout() {
-    localStorage.setItem('loggedIn', 'false');
-    this.isLoggedIn = false;
-    alert('Đã đăng xuất!');
+    this.store.dispatch(AuthActions.clearAuthState());
+    this.store.dispatch(AuthActions.logout());
   }
 }

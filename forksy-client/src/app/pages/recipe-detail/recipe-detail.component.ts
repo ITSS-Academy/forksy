@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 
 interface Ingredient {
@@ -38,6 +39,16 @@ interface Nutrition {
   fiber: number;
 }
 
+interface CommentItem {
+  id: string;
+  author: string;
+  avatarUrl?: string;
+  message: string;
+  createdAt: string;
+  isLiked?: boolean;
+  likes?: number;
+}
+
 interface Recipe {
   id: string;
   title: string;
@@ -48,6 +59,7 @@ interface Recipe {
   cookingTime: string;
   servings: number;
   difficulty: string;
+  country: string;
   rating: number;
   totalRatings: number;
   isFavorite: boolean;
@@ -76,6 +88,7 @@ interface Recipe {
     MatInputModule,
     MatSnackBarModule,
     MatMenuModule,
+    MatTooltipModule,
     FormsModule
   ],
   templateUrl: './recipe-detail.component.html',
@@ -88,6 +101,10 @@ export class RecipeDetailComponent implements OnInit {
   userRating = 0;
   hoverRating = 0;
   Math = Math; // Để sử dụng trong template
+
+  comments: CommentItem[] = [];
+  newComment: string = '';
+  currentUser: string = 'Bạn'; // Mock current user
 
   constructor(
     private route: ActivatedRoute,
@@ -115,6 +132,7 @@ export class RecipeDetailComponent implements OnInit {
         cookingTime: '3 giờ',
         servings: 4,
         difficulty: 'Trung bình',
+        country: 'Việt Nam',
         rating: 4.8,
         totalRatings: 156,
         isFavorite: false,
@@ -175,7 +193,27 @@ export class RecipeDetailComponent implements OnInit {
     ];
 
     this.recipe = mockRecipes.find(r => r.id === this.recipeId) || null;
-    
+
+    // Mock comments
+    this.comments = [
+      { 
+        id: 'c1', 
+        author: 'An', 
+        message: 'Món này nhìn hấp dẫn quá!', 
+        createdAt: new Date().toISOString(),
+        isLiked: false,
+        likes: 5
+      },
+      { 
+        id: 'c2', 
+        author: 'Bình', 
+        message: 'Mình đã thử và rất ngon.', 
+        createdAt: new Date().toISOString(),
+        isLiked: true,
+        likes: 12
+      }
+    ];
+
     if (!this.recipe) {
       this.router.navigate(['/home']);
     }
@@ -204,7 +242,6 @@ export class RecipeDetailComponent implements OnInit {
   setRating(rating: number) {
     this.userRating = rating;
     if (this.recipe) {
-      // Trong thực tế sẽ gọi API để cập nhật rating
       this.showSnackBar(`Bạn đã đánh giá ${rating} sao!`);
     }
   }
@@ -245,6 +282,52 @@ export class RecipeDetailComponent implements OnInit {
     if (shareUrl) {
       window.open(shareUrl, '_blank', 'width=600,height=400');
     }
+  }
+
+  addComment() {
+    const text = (this.newComment || '').trim();
+    if (!text) {
+      return;
+    }
+    const newItem: CommentItem = {
+      id: 'c_' + Date.now().toString(36),
+      author: 'Bạn',
+      message: text,
+      createdAt: new Date().toISOString(),
+      isLiked: false,
+      likes: 0
+    };
+    this.comments = [newItem, ...this.comments];
+    this.newComment = '';
+    this.showSnackBar('Đã đăng bình luận');
+  }
+
+  deleteComment(id: string) {
+    this.comments = this.comments.filter(c => c.id !== id);
+  }
+
+  likeComment(comment: CommentItem) {
+    comment.isLiked = !comment.isLiked;
+    if (comment.isLiked) {
+      comment.likes = (comment.likes || 0) + 1;
+    } else {
+      comment.likes = Math.max(0, (comment.likes || 0) - 1);
+    }
+  }
+
+  replyToComment(comment: CommentItem) {
+    this.newComment = `@${comment.author} `;
+    // Focus on comment input
+    setTimeout(() => {
+      const textarea = document.querySelector('.comment-input textarea') as HTMLTextAreaElement;
+      if (textarea) {
+        textarea.focus();
+      }
+    }, 100);
+  }
+
+  reportComment(comment: CommentItem) {
+    this.showSnackBar(`Đã báo cáo bình luận của ${comment.author}`);
   }
 
   private showSnackBar(message: string) {

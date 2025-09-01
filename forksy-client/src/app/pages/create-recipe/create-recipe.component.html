@@ -1,199 +1,244 @@
 <div class="recipe-page-container">
-  <!-- Top Navigation Bar -->
-  <div class="top-nav-bar">
-    <div class="nav-left">
-      <button mat-icon-button class="back-button">
-        <mat-icon>arrow_back</mat-icon>
+  <!-- Header with actions -->
+  <div class="recipe-header">
+    <div class="header-actions">
+      <button mat-button color="warn" (click)="deleteRecipe()" class="action-btn">
+        <mat-icon>delete</mat-icon>
+        Delete
       </button>
-    </div>
-    <div class="nav-right">
-      <button mat-button class="download-app-btn">
-        <mat-icon>download</mat-icon>
-        Tải ứng dụng
-      </button>
-      <div class="profile-icon">
-        <span>k</span>
-      </div>
-      <button mat-raised-button color="accent" class="new-recipe-btn">
-        <mat-icon>add</mat-icon>
-        Viết món mới
+      <button mat-raised-button color="accent" (click)="publishRecipe()" class="action-btn">
+        <mat-icon>publish</mat-icon>
+        Publish
       </button>
     </div>
   </div>
 
-  <!-- Main Content Area -->
-  <div class="main-content">
-    <!-- Left Column - Main Recipe Image -->
+  <!-- Main content with 2 columns -->
+  <div class="recipe-content">
+    <!-- Left column - Main image upload -->
     <div class="left-column">
-      <div class="recipe-image-container">
-        <div class="image-upload-area" [class.has-image]="mainImagePreview">
-          <input 
-            type="file" 
-            accept="image/*" 
-            (change)="onMainImageSelected($event)"
-            id="mainImageInput"
-            class="file-input"
-          >
-          <label for="mainImageInput" class="upload-label">
-            <div class="upload-content" *ngIf="!mainImagePreview">
-              <mat-icon class="camera-icon">camera_alt</mat-icon>
-              <p class="upload-text">Tải lên hình ảnh món ăn</p>
-            </div>
-            <img *ngIf="mainImagePreview" [src]="mainImagePreview" alt="Main recipe image" class="preview-image">
-          </label>
+      <div class="image-upload-section">
+        <div class="image-upload-container" [class.has-image]="mainImage">
+          <div class="image-preview" *ngIf="mainImage">
+            <img [src]="mainImage" alt="Main recipe image">
+            <button mat-icon-button class="remove-image" (click)="mainImage = ''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+          
+          <div class="upload-placeholder" *ngIf="!mainImage">
+            <mat-icon class="upload-icon">camera_alt</mat-icon>
+            <p class="upload-text">Have you posted your cooking photo here?</p>
+            <p class="upload-subtext">Share your delicious dish with everyone!</p>
+            <input 
+              type="file" 
+              accept="image/*" 
+              (change)="onMainImageUpload($event)"
+              class="file-input"
+              id="mainImageInput">
+            <label for="mainImageInput" class="upload-button">
+              <mat-icon>add_photo_alternate</mat-icon>
+              Upload photo
+            </label>
+          </div>
         </div>
+      </div>
+
+      <!-- Extra info below the main upload -->
+      <div class="extra-info-card">
+        <form [formGroup]="recipeForm">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Notes</mat-label>
+            <textarea matInput formControlName="note" rows="3" placeholder="Additional notes about the dish..."></textarea>
+          </mat-form-field>
+
+          <div class="row-2">
+            <mat-form-field appearance="outline" class="flex-1">
+              <mat-label>Country of origin</mat-label>
+              <input matInput formControlName="originCountry" placeholder="Vietnam">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="flex-1">
+              <mat-label>Difficulty</mat-label>
+              <mat-select formControlName="difficulty">
+                <mat-option value="easy">Easy</mat-option>
+                <mat-option value="medium">Medium</mat-option>
+                <mat-option value="hard">Hard</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </form>
       </div>
     </div>
 
-    <!-- Right Column - Recipe Information -->
+    <!-- Right column - Recipe details -->
     <div class="right-column">
-      <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" class="recipe-form">
+      <form [formGroup]="recipeForm" class="recipe-form">
         
-        <!-- Recipe Title Section -->
-        <div class="recipe-title-section">
-          <mat-form-field appearance="outline" class="title-field">
-            <mat-label>Tên món ăn</mat-label>
-            <input matInput formControlName="title" placeholder="Thịt chả rang nước mắm">
-          </mat-form-field>
+        <!-- Title and description -->
+        <div class="recipe-info-section">
+          <h1 class="recipe-title">
+            Dish name: {{ recipeForm.get('title')?.value }}
+          </h1>
           
-          <div class="recipe-meta">
-            <div class="cooksnap-badge">
-              <mat-icon>camera_alt</mat-icon>
-              <span>"Mở hàng" cooksnap cho món này!</span>
-            </div>
-            <div class="comments-info">
-              <mat-icon>chat_bubble</mat-icon>
-              <span>Đã có 2 bình luận</span>
-            </div>
-            <div class="kitchen-info">
-              <span class="kitchen-name">Guruji Kitchen</span>
-              <div class="kitchen-badges">
-                <span class="badge blue">●</span>
-                <span class="badge red">●</span>
-                <span class="badge fire">🔥</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Author Section -->
-        <div class="author-section">
-          <div class="author-avatar">
-            <div class="avatar-placeholder">AV</div>
-          </div>
           <div class="author-info">
-            <div class="author-name">Annie Vo &#64;AnnieVo</div>
-            <div class="author-location">TPHCM</div>
-            <div class="hashtags">
-              <span class="hashtag">#Cookpadapron2025</span>
-              <span class="hashtag">Tuần 3: Thịt vai heo</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="action-buttons">
-          <button mat-raised-button class="save-btn">
-            <mat-icon>bookmark</mat-icon>
-            Lưu Món
-          </button>
-          <button mat-raised-button class="collection-btn">
-            <mat-icon>add</mat-icon>
-            Thêm vào bộ sưu tập
-          </button>
-          <button mat-stroked-button class="share-btn">
-            <mat-icon>share</mat-icon>
-            Chia sẻ
-          </button>
-          <button mat-stroked-button class="print-btn">
-            <mat-icon>print</mat-icon>
-            In
-          </button>
-        </div>
-
-        <!-- Ingredients Section -->
-        <div class="ingredients-section">
-          <h3 class="section-title">Nguyên Liệu</h3>
-          <div class="servings-info">
-            <mat-icon>person</mat-icon>
-            <span>3 người</span>
+            <mat-icon class="author-icon">person</mat-icon>
+            <span class="author-name">khoa le</span>
           </div>
           
-          <div class="ingredients-list" formArrayName="ingredients">
-            <div class="ingredient-item" *ngFor="let ingredient of ingredients.controls; let i = index" [formGroupName]="i">
-              <mat-form-field appearance="outline" class="ingredient-field">
-                <input 
-                  matInput 
-                  formControlName="name" 
-                  placeholder="400 g thịt vai heo"
-                >
-              </mat-form-field>
-              <button mat-icon-button (click)="removeIngredient(i)" class="remove-btn">
-                <mat-icon>close</mat-icon>
-              </button>
-            </div>
-          </div>
-          
-          <button mat-stroked-button type="button" (click)="addIngredient()" class="add-ingredient-btn">
-            <mat-icon>add</mat-icon>
-            Thêm nguyên liệu
-          </button>
+          <mat-form-field appearance="outline" class="description-field">
+            <mat-label>Description</mat-label>
+            <textarea 
+              matInput 
+              formControlName="description"
+              rows="4"
+              placeholder="">
+            </textarea>
+          </mat-form-field>
         </div>
 
-        <!-- Instructions Section -->
-        <div class="instructions-section">
-          <h3 class="section-title">Hướng dẫn cách làm</h3>
-          <div class="cooking-time">
-            <mat-icon>schedule</mat-icon>
-            <span>20 phút</span>
-          </div>
+        <!-- Ingredients and steps -->
+        <div class="recipe-sections">
           
-          <div class="steps-list" formArrayName="steps">
-            <div class="step-item" *ngFor="let step of steps.controls; let i = index" [formGroupName]="i">
-              <div class="step-header">
-                <div class="step-number">{{ i + 1 }}</div>
-                <mat-form-field appearance="outline" class="step-field">
-                  <textarea matInput formControlName="description" placeholder="Mô tả bước {{ i + 1 }}" rows="3"></textarea>
-                </mat-form-field>
+          <!-- Ingredients section -->
+          <div class="ingredients-section">
+            <h2 class="section-title">Ingredients</h2>
+            
+            <!-- Ration -->
+            <div class="ration-field">
+              <label class="field-label">Servings</label>
+              <div class="ration-controls">
+                <button type="button" mat-icon-button (click)="updateServings(-1)">
+                  <mat-icon>remove</mat-icon>
+                </button>
+                <span class="ration-value">{{ servings }} people</span>
+                <button type="button" mat-icon-button (click)="updateServings(1)">
+                  <mat-icon>add</mat-icon>
+                </button>
               </div>
-              
-              <!-- Step Images -->
-              <div class="step-images">
-                <div class="step-image-upload" *ngFor="let imgIndex of [0, 1, 2]">
-                  <input 
-                    type="file" 
-                    accept="image/*" 
-                    (change)="onStepImageSelected($event, i, imgIndex)"
-                    [id]="'stepImageInput' + i + '_' + imgIndex"
-                    class="file-input"
-                  >
-                  <label [for]="'stepImageInput' + i + '_' + imgIndex" class="step-upload-label">
-                    <div class="step-upload-content" *ngIf="!getStepImage(i, imgIndex)">
-                      <mat-icon class="camera-icon">add_a_photo</mat-icon>
-                    </div>
-                    <img *ngIf="getStepImage(i, imgIndex)" [src]="getStepImage(i, imgIndex)" alt="Step image" class="step-preview-image">
-                  </label>
+            </div>
+            
+            <!-- Ingredient list -->
+            <div class="ingredients-list" formArrayName="ingredients">
+              <div 
+                class="ingredient-item" 
+                *ngFor="let ingredient of ingredients.controls; let i = index"
+                [formGroupName]="i">
+                
+                <div class="ingredient-content">
+                  <mat-form-field appearance="outline" class="ingredient-field">
+                    <input 
+                      matInput 
+                      formControlName="name"
+                      placeholder="250g flour">
+                  </mat-form-field>
+                </div>
+                
+                <div class="ingredient-actions">
+                  <button mat-icon-button class="more-options" [matMenuTriggerFor]="ingredientMenu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  
+                  <mat-menu #ingredientMenu="matMenu">
+                    <button mat-menu-item (click)="removeIngredient(i)">
+                      <mat-icon>delete</mat-icon>
+                      <span>Remove</span>
+                    </button>
+                  </mat-menu>
                 </div>
               </div>
-              
-              <button mat-icon-button (click)="removeStep(i)" class="remove-step-btn">
-                <mat-icon>delete</mat-icon>
+            </div>
+            
+            <!-- Add buttons -->
+            <div class="add-buttons">
+              <button type="button" mat-button (click)="addIngredient()" class="add-btn">
+                <mat-icon>add</mat-icon>
+                Ingredient
               </button>
             </div>
           </div>
-          
-          <button mat-stroked-button type="button" (click)="addStep()" class="add-step-btn">
-            <mat-icon>add</mat-icon>
-            Thêm bước mới
-          </button>
-        </div>
 
-        <!-- Submit Button -->
-        <div class="submit-section">
-          <button mat-raised-button color="primary" type="submit" class="submit-btn">
-            <mat-icon>save</mat-icon>
-            Lưu công thức
-          </button>
+          <!-- Steps section -->
+          <div class="steps-section">
+            <h2 class="section-title">Steps</h2>
+            
+            <!-- Time to cook -->
+            <div class="time-field">
+              <label class="field-label">Cooking time</label>
+              <div class="time-controls">
+                <mat-form-field appearance="outline" class="time-input">
+                  <mat-select formControlName="cookingTime" placeholder="Select time">
+                    <mat-option *ngFor="let t of timeOptions" [value]="t">{{ t }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            
+            <!-- Step list -->
+            <div class="steps-list" formArrayName="steps">
+              <div 
+                class="step-item" 
+                *ngFor="let step of steps.controls; let i = index"
+                [formGroupName]="i">
+                
+                <div class="step-content">
+                  <div class="step-number">{{ i + 1 }}</div>
+                  
+                  <mat-form-field appearance="outline" class="step-field">
+                    <textarea 
+                      matInput 
+                      formControlName="description"
+                      rows="2"
+                      placeholder="Describe step {{ i + 1 }}">
+                    </textarea>
+                  </mat-form-field>
+                  
+                  <button mat-icon-button class="more-options" [matMenuTriggerFor]="stepMenu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  
+                  <mat-menu #stepMenu="matMenu">
+                    <button mat-menu-item (click)="removeStep(i)">
+                      <mat-icon>delete</mat-icon>
+                      <span>Remove step</span>
+                    </button>
+                  </mat-menu>
+                </div>
+                
+                <!-- Step image -->
+                <div class="step-image-upload">
+                  <div class="step-image-container" [class.has-image]="stepImages[i]">
+                    <div class="step-image-preview" *ngIf="stepImages[i]">
+                      <img [src]="stepImages[i]" alt="Step image">
+                      <button mat-icon-button class="remove-step-image" (click)="stepImages[i] = ''">
+                        <mat-icon>close</mat-icon>
+                      </button>
+                    </div>
+                    
+                    <div class="step-upload-placeholder" *ngIf="!stepImages[i]">
+                      <div class="left-strip"></div>
+                      <mat-icon class="step-upload-icon">camera_alt</mat-icon>
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        (change)="onStepImageUpload($event, i)"
+                        class="step-file-input"
+                        [id]="'stepImageInput' + i">
+                      <label [for]="'stepImageInput' + i" class="step-upload-button">
+                        <mat-icon>add_photo_alternate</mat-icon>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Add step button -->
+            <button type="button" mat-button (click)="addStep()" class="add-step-btn">
+              <mat-icon>add</mat-icon>
+              Add more step
+            </button>
+          </div>
         </div>
       </form>
     </div>
