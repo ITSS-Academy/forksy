@@ -11,6 +11,7 @@ import { AuthModel } from './models/auth.model';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [RouterOutlet, NavBarComponent, MaterialModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

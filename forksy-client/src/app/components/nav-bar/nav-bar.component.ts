@@ -9,6 +9,7 @@ import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-nav-bar',
+  standalone: true,
   imports: [
     RouterLink,
     RouterLinkActive,

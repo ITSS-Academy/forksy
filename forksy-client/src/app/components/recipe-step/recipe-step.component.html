@@ -1,0 +1,22 @@
+<div class="step-container">
+  <div class="step-header">
+    <span>Step</span>
+    <div class="time-to-cook">
+      <label>Time to cook</label>
+      <input [value]="timeToCook" readonly />
+    </div>
+  </div>
+  <div *ngFor="let step of steps; let i = index" class="step-item">
+    <div class="step-index">
+      <span>{{ i + 1 }}</span>
+    </div>
+    <input [value]="step.description" readonly placeholder="Step description..." />
+    <div class="step-image">
+      <img *ngIf="step.image" [src]="step.image" alt="Step image" />
+      <input type="file" (change)="onImageChange($event, i)" />
+      <button *ngIf="step.image" (click)="step.image=''">Remove Image</button>
+    </div>
+    <button (click)="onRemoveStep(i)">...</button>
+  </div>
+  <button (click)="onAddStep()">+ Add more step</button>
+</div>

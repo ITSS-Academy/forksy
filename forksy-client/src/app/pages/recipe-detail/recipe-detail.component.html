@@ -1,1 +1,219 @@
-<p>recipe-detail works!</p>
+<div class="cookpad-detail" *ngIf="recipe">
+  <!-- Top header -->
+  <div class="cp-header">
+    <div class="cp-hero">
+      <img [src]="recipe.mainImage" [alt]="recipe.title">
+    </div>
+    <div class="cp-title-area">
+      <h1 class="cp-title">{{ recipe.title }}</h1>
+      <div class="cp-meta">
+        <div class="cp-author">
+          <mat-icon>person</mat-icon>
+          <span>{{ recipe.author }}</span>
+        </div>
+        <div class="cp-time">
+          <mat-icon>schedule</mat-icon>
+          <span>{{ recipe.cookingTime }}</span>
+        </div>
+        <div class="cp-country">
+          <mat-icon>public</mat-icon>
+          <span>{{ recipe.country }}</span>
+        </div>
+        <div class="cp-difficulty">
+          <mat-icon>trending_up</mat-icon>
+          <span>{{ recipe.difficulty }}</span>
+        </div>
+      </div>
+      <p class="cp-desc">{{ recipe.description }}</p>
+      <div class="cp-actions">
+        <button mat-stroked-button color="primary" (click)="toggleSaved()">
+          <mat-icon>{{ recipe.isSaved ? 'bookmark' : 'bookmark_border' }}</mat-icon>
+          {{ recipe.isSaved ? 'Đã lưu' : 'Lưu Món' }}
+        </button>
+        <button mat-stroked-button (click)="toggleFavorite()">
+          <mat-icon>{{ recipe.isFavorite ? 'favorite' : 'favorite_border' }}</mat-icon>
+          {{ recipe.isFavorite ? 'Đã yêu thích' : 'Yêu thích' }}
+        </button>
+        <button mat-stroked-button [matMenuTriggerFor]="shareMenu">
+          <mat-icon>share</mat-icon>
+          Chia sẻ
+        </button>
+        <mat-menu #shareMenu="matMenu">
+          <button mat-menu-item (click)="shareRecipe('facebook')"><mat-icon>facebook</mat-icon>Facebook</button>
+          <button mat-menu-item (click)="shareRecipe('zalo')"><mat-icon>chat</mat-icon>Zalo</button>
+          <button mat-menu-item (click)="shareRecipe('twitter')"><mat-icon>twitter</mat-icon>Twitter</button>
+          <button mat-menu-item (click)="shareRecipe('copy')"><mat-icon>content_copy</mat-icon>Sao chép link</button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+
+  <!-- Two columns -->
+  <div class="cp-body">
+    <!-- Left: Ingredients -->
+    <aside class="cp-left">
+      <h2 class="cp-section">Nguyên Liệu</h2>
+      <div class="cp-serving">
+        <mat-icon>groups</mat-icon>
+        <span>{{ recipe.servings }} phần</span>
+      </div>
+      <ul class="cp-ingredients">
+        <li *ngFor="let ing of recipe.ingredients">
+          <span class="cp-ing-name">{{ ing.amount }} {{ ing.name }}</span>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Right: Steps -->
+    <main class="cp-right">
+      <h2 class="cp-section">Hướng dẫn cách làm</h2>
+      <ol class="cp-steps">
+        <li *ngFor="let step of recipe.steps; let i = index" class="cp-step">
+          <div class="cp-step-index">{{ i + 1 }}</div>
+          <div class="cp-step-body">
+            <p class="cp-step-text">{{ step.description }}</p>
+            <div class="cp-step-images" *ngIf="step.image">
+              <img [src]="step.image" [alt]="'Bước ' + (i + 1)">
+            </div>
+          </div>
+        </li>
+      </ol>
+    </main>
+  </div>
+
+  <!-- Comments Section -->
+  <div class="comments-section">
+    <div class="comments-header">
+      <h2 class="comments-title">
+        <mat-icon>chat_bubble_outline</mat-icon>
+        Bình luận ({{ comments.length || 0 }})
+      </h2>
+      <p class="comments-subtitle">Chia sẻ ý kiến và kinh nghiệm của bạn về món ăn này</p>
+    </div>
+
+    <!-- Add Comment Form -->
+    <div class="add-comment-card">
+      <div class="comment-form-header">
+        <div class="user-avatar">
+          <mat-icon>person</mat-icon>
+        </div>
+        <div class="comment-form-content">
+          <mat-form-field appearance="outline" class="comment-input">
+            <mat-label>Viết bình luận của bạn...</mat-label>
+            <textarea 
+              matInput 
+              [(ngModel)]="newComment" 
+              placeholder="Chia sẻ cảm nhận về món ăn này..."
+              rows="3"
+              maxlength="500">
+            </textarea>
+            <mat-hint align="end">{{ newComment.length || 0 }}/500</mat-hint>
+          </mat-form-field>
+          
+          <div class="comment-actions">
+            <div class="comment-tools">
+              <button mat-icon-button matTooltip="Thêm emoji">
+                <mat-icon>sentiment_satisfied_alt</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Thêm ảnh">
+                <mat-icon>image</mat-icon>
+              </button>
+            </div>
+            <button 
+              mat-raised-button 
+              color="primary" 
+              (click)="addComment()"
+              [disabled]="!newComment.trim()"
+              class="post-comment-btn">
+              <mat-icon>send</mat-icon>
+              Đăng bình luận
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comments List -->
+    <div class="comments-list" *ngIf="comments && comments.length > 0">
+      <div class="comment-item" *ngFor="let comment of comments; let i = index">
+        <div class="comment-avatar">
+          <div class="avatar-circle">
+            {{ comment.author.substring(0,1).toUpperCase() }}
+          </div>
+        </div>
+        
+        <div class="comment-content">
+          <div class="comment-header">
+            <div class="comment-author-info">
+              <span class="comment-author-name">{{ comment.author }}</span>
+              <span class="comment-badge" *ngIf="comment.author === recipe?.author">
+                <mat-icon>verified</mat-icon>
+                Tác giả
+              </span>
+            </div>
+            <div class="comment-meta">
+              <span class="comment-time">
+                <mat-icon>schedule</mat-icon>
+                {{ comment.createdAt | date:'dd/MM/yyyy HH:mm' }}
+              </span>
+              <button 
+                mat-icon-button 
+                class="comment-menu-btn"
+                [matMenuTriggerFor]="commentMenu"
+                (click)="$event.stopPropagation()">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #commentMenu="matMenu">
+                <button mat-menu-item (click)="replyToComment(comment)">
+                  <mat-icon>reply</mat-icon>
+                  Trả lời
+                </button>
+                <button mat-menu-item (click)="reportComment(comment)">
+                  <mat-icon>flag</mat-icon>
+                  Báo cáo
+                </button>
+                <button 
+                  mat-menu-item 
+                  (click)="deleteComment(comment.id)"
+                  *ngIf="comment.author === currentUser">
+                  <mat-icon>delete</mat-icon>
+                  Xóa
+                </button>
+              </mat-menu>
+            </div>
+          </div>
+          
+          <div class="comment-body">
+            <p class="comment-text">{{ comment.message }}</p>
+          </div>
+          
+          <div class="comment-actions">
+            <button mat-button class="action-btn" (click)="likeComment(comment)">
+              <mat-icon [class.liked]="comment.isLiked">{{ comment.isLiked ? 'favorite' : 'favorite_border' }}</mat-icon>
+              <span>{{ comment.likes || 0 }}</span>
+            </button>
+            <button mat-button class="action-btn" (click)="replyToComment(comment)">
+              <mat-icon>reply</mat-icon>
+              <span>Trả lời</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-comments" *ngIf="!comments || comments.length === 0">
+      <div class="empty-icon">
+        <mat-icon>chat_bubble_outline</mat-icon>
+      </div>
+      <h3>Chưa có bình luận nào</h3>
+      <p>Hãy là người đầu tiên chia sẻ cảm nhận về món ăn này!</p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!recipe" class="loading-container">
+  <mat-spinner></mat-spinner>
+  <p>Đang tải thông tin món ăn...</p>
+</div>
+
