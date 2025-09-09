@@ -1,1 +1,75 @@
-<p>my-recipe works!</p>
+<div class="center-wrapper">
+    <div class="recipe-container">
+        <!-- Title -->
+        <div class="page-title">
+            <h2>My Recipe</h2>
+        </div>
+
+        <!-- Search & Filter -->
+        <div class="search-filter">
+            <div class="search-input-group">
+                <input placeholder="Search recipes" />
+                <span class="search-icon">
+                    <mat-icon>search</mat-icon>
+                </span>
+            </div>
+            <div class="filter-btn-group">
+                <button mat-raised-button color="primary" class="fill-btn" [matMenuTriggerFor]="fillMenu1">
+                    <mat-icon>filter_list</mat-icon>
+                    <span>Level</span>
+                </button>
+                <button mat-raised-button color="primary" class="fill-btn" [matMenuTriggerFor]="fillMenu2">
+                    <mat-icon>filter_list</mat-icon>
+                    <span>Country</span>
+                </button>
+            </div>
+            <mat-menu #fillMenu1="matMenu" class="fill-menu">
+                <button mat-menu-item *ngFor="let level of this.difficultyLevels" (click)="filterDifficulty(level)">
+                    {{ level }}
+                </button>
+            </mat-menu>
+            <mat-menu #fillMenu2="matMenu" class="fill-menu">
+                <button mat-menu-item *ngFor="let cuisine of this.cuisines" (click)="filterCuisine(cuisine)">
+                    {{ cuisine }}
+                </button>
+            </mat-menu>
+        </div>
+
+                <div class="recipe-list-center">
+            <ng-container *ngFor="let recipe of myRecipes">
+                <mat-card class="recipe-card" *ngIf="recipe">
+                    <div class="card-content">
+                        <img mat-card-image [src]="recipe.image" alt="recipe" />
+                        <mat-card-content>
+                            <h3>{{ recipe.title }}</h3>
+                            <p>{{ recipe.description }}</p>
+                            <span class="date">{{ recipe.date }}</span>
+                        </mat-card-content>
+                        <button mat-icon-button [matMenuTriggerFor]="cardMenu" class="menu-btn">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #cardMenu="matMenu" class="card-menu">
+                            <button mat-menu-item (click)="onEdit(recipe)">
+                                <mat-icon>edit</mat-icon>
+                                <span>Edit</span>
+                            </button>
+                            <button mat-menu-item (click)="onDelete(recipe)">
+                                <mat-icon>delete</mat-icon>
+                                <span>Delete</span>
+                            </button>
+                        </mat-menu>
+                    </div>
+                </mat-card>
+            </ng-container>
+        </div>
+        <div class="pagination">
+            <button mat-icon-button>
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span>1</span>
+            <button mat-icon-button>
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>
