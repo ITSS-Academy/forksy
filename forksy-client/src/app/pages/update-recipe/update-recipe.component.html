@@ -1,1 +1,254 @@
-<p>update-recipe works!</p>
+<div class="recipe-page-container">
+  <!-- Header with actions -->
+  <div class="recipe-header">
+    <div class="header-actions">
+      <button mat-button color="warn" (click)="deleteRecipe()" class="action-btn">
+        <mat-icon>delete</mat-icon>
+        Delete
+      </button>
+      <button mat-raised-button color="accent" (click)="updateRecipe()" class="action-btn">
+        <mat-icon>edit</mat-icon>
+        Update
+      </button>
+    </div>
+  </div>
+
+  <!-- Main content with 2 columns -->
+  <div class="recipe-content">
+    <!-- Left column - Main image upload -->
+    <div class="left-column">
+      <div class="image-upload-section">
+        <div class="image-upload-container" [class.has-image]="mainImage">
+          <div class="image-preview" *ngIf="mainImage">
+            <img [src]="mainImage" alt="Main recipe image">
+            <div class="image-overlay">
+              <button mat-icon-button class="remove-image" (click)="mainImage = ''" matTooltip="Remove image">
+                <mat-icon>close</mat-icon>
+              </button>
+              <button mat-icon-button class="change-image" (click)="triggerImageUpload()" matTooltip="Change image">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+          </div>
+          
+          <div class="upload-placeholder" *ngIf="!mainImage" (click)="triggerImageUpload()">
+            <input 
+              type="file" 
+              accept="image/*" 
+              (change)="onMainImageUpload($event)"
+              class="file-input"
+              id="mainImageInput">
+            <div class="upload-content">
+              <mat-icon>add_photo_alternate</mat-icon>
+              <span>Add photo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Extra info below the main upload -->
+      <div class="extra-info-card">
+        <form [formGroup]="recipeForm">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Notes</mat-label>
+            <textarea matInput formControlName="note" rows="3" placeholder="Additional notes about the dish..."></textarea>
+          </mat-form-field>
+
+          <div class="row-2">
+            <mat-form-field appearance="outline" class="flex-1">
+              <mat-label>Country of origin</mat-label>
+              <input matInput formControlName="originCountry" placeholder="Vietnam">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="flex-1">
+              <mat-label>Difficulty</mat-label>
+              <mat-select formControlName="difficulty">
+                <mat-option value="easy">Easy</mat-option>
+                <mat-option value="medium">Medium</mat-option>
+                <mat-option value="hard">Hard</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Right column - Recipe details -->
+    <div class="right-column">
+      <form [formGroup]="recipeForm" class="recipe-form">
+        
+        <!-- Title and description -->
+        <div class="recipe-info-section">
+          <mat-form-field appearance="outline" class="title-field">
+            <mat-label>Dish name</mat-label>
+            <input matInput formControlName="title" placeholder="Enter dish name">
+          </mat-form-field>
+          
+          <div class="author-info">
+            <mat-icon class="author-icon">person</mat-icon>
+            <span class="author-name">khoa le</span>
+          </div>
+          
+          <mat-form-field appearance="outline" class="description-field">
+            <mat-label>Description</mat-label>
+            <textarea 
+              matInput 
+              formControlName="description"
+              rows="4"
+              placeholder="">
+            </textarea>
+          </mat-form-field>
+        </div>
+
+        <!-- Ingredients and steps -->
+        <div class="recipe-sections">
+          
+          <!-- Ingredients section -->
+          <div class="ingredients-section">
+            <h2 class="section-title">Ingredients</h2>
+            
+            <!-- Ration -->
+            <div class="ration-field">
+              <label class="field-label">Servings</label>
+              <div class="ration-controls">
+                <button type="button" mat-icon-button (click)="updateServings(-1)">
+                  <mat-icon>remove</mat-icon>
+                </button>
+                <span class="ration-value">{{ servings }} people</span>
+                <button type="button" mat-icon-button (click)="updateServings(1)">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Ingredient list -->
+            <div class="ingredients-list" formArrayName="ingredients">
+              <div 
+                class="ingredient-item" 
+                *ngFor="let ingredient of ingredients.controls; let i = index"
+                [formGroupName]="i">
+                
+                <div class="ingredient-content">
+                  <mat-form-field appearance="outline" class="ingredient-field">
+                    <input 
+                      matInput 
+                      formControlName="name"
+                      placeholder="Ingredient name">
+                  </mat-form-field>
+                </div>
+                
+                <div class="ingredient-actions">
+                  <button mat-icon-button class="more-options" [matMenuTriggerFor]="ingredientMenu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  
+                  <mat-menu #ingredientMenu="matMenu">
+                    <button mat-menu-item (click)="removeIngredient(i)">
+                      <mat-icon>delete</mat-icon>
+                      <span>Remove</span>
+                    </button>
+                  </mat-menu>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Add buttons -->
+            <div class="add-buttons">
+              <button type="button" mat-button (click)="addIngredient()" class="add-btn">
+                <mat-icon>add</mat-icon>
+                Ingredient
+              </button>
+            </div>
+          </div>
+
+          <!-- Steps section -->
+          <div class="steps-section">
+            <h2 class="section-title">Steps</h2>
+            
+            <!-- Time to cook -->
+            <div class="time-field">
+              <label class="field-label">Cooking time</label>
+              <div class="time-controls">
+                <mat-form-field appearance="outline" class="time-input">
+                  <mat-select formControlName="cookingTime" placeholder="Select time">
+                    <mat-option *ngFor="let t of timeOptions" [value]="t">{{ t }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            
+            <!-- Step list -->
+            <div class="steps-list" formArrayName="steps">
+              <div 
+                class="step-item" 
+                *ngFor="let step of steps.controls; let i = index"
+                [formGroupName]="i">
+                
+                <div class="step-content">
+                  <div class="step-number">{{ i + 1 }}</div>
+                  
+                  <mat-form-field appearance="outline" class="step-field">
+                    <textarea 
+                      matInput 
+                      formControlName="description"
+                      rows="2"
+                      placeholder="Describe step {{ i + 1 }}">
+                    </textarea>
+                  </mat-form-field>
+                  
+                  <button mat-icon-button class="more-options" [matMenuTriggerFor]="stepMenu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  
+                  <mat-menu #stepMenu="matMenu">
+                    <button mat-menu-item (click)="removeStep(i)">
+                      <mat-icon>delete</mat-icon>
+                      <span>Remove step</span>
+                    </button>
+                  </mat-menu>
+                </div>
+                
+                <!-- Step image -->
+                <div class="step-image-upload">
+                  <div class="step-image-container" [class.has-image]="stepImages[i]">
+                    <div class="step-image-preview" *ngIf="stepImages[i]">
+                      <img [src]="stepImages[i]" alt="Step image">
+                      <div class="step-image-overlay">
+                        <button mat-icon-button class="remove-step-image" (click)="stepImages[i] = ''" matTooltip="Remove image">
+                          <mat-icon>close</mat-icon>
+                        </button>
+                        <button mat-icon-button class="change-step-image" (click)="triggerStepImageUpload(i)" matTooltip="Change image">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div class="step-upload-placeholder" *ngIf="!stepImages[i]">
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        (change)="onStepImageUpload($event, i)"
+                        class="step-file-input"
+                        [id]="'stepImageInput' + i">
+                      <label [for]="'stepImageInput' + i" class="step-upload-button">
+                        <mat-icon>add_photo_alternate</mat-icon>
+                        <span>Add photo</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Add step button -->
+            <button type="button" mat-button (click)="addStep()" class="add-step-btn">
+              <mat-icon>add</mat-icon>
+              Add more step
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
