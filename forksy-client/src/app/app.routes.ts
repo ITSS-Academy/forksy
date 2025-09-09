@@ -42,7 +42,7 @@ export const routes: Routes = [
     loadComponent: () => import('../app/pages/create-recipe/create-recipe.component').then(m => m.CreateRecipeComponent),
   },
   {
-    path:'update-recipe/:id',
+    path:'update-recipe',
     loadComponent: () => import('../app/pages/update-recipe/update-recipe.component').then(m => m.UpdateRecipeComponent),
   },
   {

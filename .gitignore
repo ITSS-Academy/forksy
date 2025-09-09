@@ -46,11 +46,37 @@ Thumbs.db
 *-debug.log
 .runtimeconfig.json
 
-/dimora-client/src/environments
+/forksy-client/src/environments/*
 
-/booking-core/config
+/core/config/*
 /.env
 /.env.development.local
 /.env.test.local
 /.env.production.local
 /.env.local
+
+# Google Cloud credentials
+core/src/config/private-key.json
+**/private-key.json
+**/service-account.json
+**/credentials.json
+**/config/*.json
+
+# NestJS specific
+core/dist/
+core/build/
+core/.env
+core/.env.local
+core/.env.development.local
+core/.env.test.local
+core/.env.production.local
+
+# Angular specific
+forksy-client/dist/
+forksy-client/.angular/
+forksy-client/coverage/
+forksy-client/.nyc_output/
+
+# Logs
+*.log
+logs/ 

@@ -2,7 +2,7 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { provideStore } from '@ngrx/store';
@@ -10,7 +10,7 @@ import { provideEffects } from '@ngrx/effects';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { authReducer } from './ngrx/auth/auth.reducer';
-import * as authEffects from './ngrx/auth/auth.effect';
+import * as authEffects from './ngrx/auth/auth.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,6 +22,7 @@ export const appConfig: ApplicationConfig = {
     provideEffects(
       authEffects
     ),
+    provideHttpClient(withInterceptors([])),
     provideFirebaseApp(() =>
       initializeApp({
         projectId: 'recipe-cook-af395',
