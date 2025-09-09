@@ -44,6 +44,13 @@
             font-size: 14px;
             color: #555;
             margin: 4px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+            word-break: break-word;
         }
 
         .date {
@@ -54,8 +61,12 @@
 
     .fav-btn {
         position: absolute;
-        top: 8px;
-        right: 8px;
+        top: -5px;
+        right: 0px;
+    }
+    .mat-icon {
+        top: -5px;
+        right: 0px;
     }
 }
 

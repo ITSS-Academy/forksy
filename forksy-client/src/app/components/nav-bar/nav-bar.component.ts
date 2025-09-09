@@ -21,6 +21,7 @@ import { AsyncPipe } from '@angular/common';
 })
 export class NavBarComponent {
   auth$: Observable<AuthState>;
+  isMobileMenuOpen = false;
 
   constructor(private store: Store<{ auth: AuthState }>) {
     this.auth$ = this.store.select('auth');
@@ -33,5 +34,13 @@ export class NavBarComponent {
   logout() {
     this.store.dispatch(AuthActions.clearAuthState());
     this.store.dispatch(AuthActions.logout());
+  }
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuOpen = false;
   }
 }
