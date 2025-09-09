@@ -1,0 +1,191 @@
+.recipe-list-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding-top: 24px;
+    gap: 16px;
+}
+
+.recipe-card {
+    max-width: 1050px;
+    width: 100%;
+    // background: #FFFDEB;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 12px;
+    display: flex;
+
+    .card-content {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        gap: 16px;
+        position: relative;
+    }
+
+    img {
+        width: 120px;
+        height: 90px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    mat-card-content {
+        flex: 1;
+
+        h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 14px;
+            color: #555;
+            margin: 4px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+            word-break: break-word;
+        }
+
+        .date {
+            font-size: 12px;
+            color: gray;
+        }
+    }
+
+    .fav-btn {
+        position: absolute;
+        top: -5px;
+        right: 0px;
+    }
+    .mat-icon {
+        top: -5px;
+        right: 0px;
+    }
+}
+
+.center-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.recipe-container {
+    width: 100%;
+    max-width: 1000px;
+    display: type-of($value: top);
+    flex-direction: column;
+    align-items: center;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+}
+
+.page-title,
+.search-filter,
+.recipe-list-center,
+.pagination {
+    width: 100%;
+    max-width: 1050px; // giống card
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    margin-top: 24px;
+}
+
+.page-title {
+    margin-bottom: 24px;
+}
+
+.recipe-list-center {
+    flex-direction: column;
+    gap: 25px;
+    padding-top: 24px;
+}
+
+.search-input-group {
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+    padding: 0 12px;
+    height: 44px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+    input {
+        border: none;
+        background: transparent;
+        outline: none;
+        font-size: 16px;
+        color: #333;
+        flex: 1;
+        padding: 0 8px;
+        height: 100%;
+    }
+
+    .search-icon {
+        display: flex;
+        align-items: center;
+        color: #6d6d5c;
+        font-size: 22px;
+        cursor: pointer;
+        margin-left: 8px;
+    }
+}
+
+.search-filter {
+    gap: 12px;
+    margin-bottom: 24px;
+    justify-content: flex-start;
+
+    button {
+        background: #eba642 !important;
+        border-radius: 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        margin-left: auto;
+        min-width: 56px;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.filter-btn-group {
+    display: flex;
+    gap: 24px;
+    margin-left: auto;
+}
+
+.fill-btn {
+    background: #eba642 !important;
+    color: #fff !important; // chữ trắng
+    padding: 0 16px;
+    border-radius: 24px;
+    min-width: 100px;
+    height: 40px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+
+    .mat-icon {
+        color: #fff !important; // icon trắng
+        font-size: 20px;
+    }
+}
