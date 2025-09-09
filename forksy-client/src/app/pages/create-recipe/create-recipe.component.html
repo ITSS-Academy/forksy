@@ -49,6 +49,11 @@
       <!-- Extra info below the main upload -->
       <div class="extra-info-card">
         <form [formGroup]="recipeForm">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Notes</mat-label>
+            <textarea matInput formControlName="note" rows="3" placeholder="Additional notes about the dish..."></textarea>
+          </mat-form-field>
+
           <div class="row-2">
             <mat-form-field appearance="outline" class="flex-1">
               <mat-label>Country of origin</mat-label>
@@ -123,27 +128,23 @@
                 *ngFor="let ingredient of ingredients.controls; let i = index"
                 [formGroupName]="i">
                 
-                <div class="ingredient-content">
-                  <mat-form-field appearance="outline" class="ingredient-field">
-                    <input 
-                      matInput 
-                      formControlName="name"
-                      placeholder="Ingredient name">
-                  </mat-form-field>
-                </div>
+                <mat-form-field appearance="outline" class="ingredient-field">
+                  <input 
+                    matInput 
+                    formControlName="name"
+                    placeholder="Ingredient name">
+                </mat-form-field>
                 
-                <div class="ingredient-actions">
-                  <button mat-icon-button class="more-options" [matMenuTriggerFor]="ingredientMenu">
-                    <mat-icon>more_vert</mat-icon>
+                <button mat-icon-button class="more-options" [matMenuTriggerFor]="ingredientMenu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                
+                <mat-menu #ingredientMenu="matMenu">
+                  <button mat-menu-item (click)="removeIngredient(i)">
+                    <mat-icon>delete</mat-icon>
+                    <span>Remove</span>
                   </button>
-                  
-                  <mat-menu #ingredientMenu="matMenu">
-                    <button mat-menu-item (click)="removeIngredient(i)">
-                      <mat-icon>delete</mat-icon>
-                      <span>Remove</span>
-                    </button>
-                  </mat-menu>
-                </div>
+                </mat-menu>
               </div>
             </div>
             

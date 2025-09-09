@@ -326,4 +326,13 @@ export class UpdateRecipeComponent implements OnInit {
     // Not used with dropdown; kept for compatibility
     this.cookingTime = '1h 30m';
   }
+
+  clearRecipe() {
+    if (confirm('Are you sure you want to clear all changes? This will reset the form to the original recipe data.')) {
+      if (this.currentRecipe) {
+        this.bindRecipeToForm(this.currentRecipe);
+        this.snackBar.open('Recipe cleared to original data.', 'Close', { duration: 3000 });
+      }
+    }
+  }
 }

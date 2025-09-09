@@ -38,7 +38,7 @@
                 <div class="recipe-list-center">
             <ng-container *ngFor="let recipe of myRecipes">
                 <mat-card class="recipe-card" *ngIf="recipe">
-                    <div class="card-content">
+                    <div class="card-content" (click)="navigateToDetail(recipe.id)">
                         <img mat-card-image [src]="recipe.image" alt="recipe" />
                         <mat-card-content>
                             <h3>{{ recipe.title }}</h3>

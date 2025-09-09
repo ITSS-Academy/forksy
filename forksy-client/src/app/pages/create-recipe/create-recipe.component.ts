@@ -66,22 +66,16 @@ export class CreateRecipeComponent implements OnInit {
       description: [''],
       originCountry: [''],
       difficulty: ['medium'],
+      note: [''],
       servings: [, Validators.required],
       cookingTime: ['1h 30m', Validators.required],
       ingredients: this.fb.array([
         this.fb.group({
-          name: ['', Validators.required],
-          amount: ['', Validators.required]
-        }),
-        this.fb.group({
-          name: ['', Validators.required],
-        amount: ['', Validators.required]
+          name: ['', Validators.required]
+
         })
       ]),
       steps: this.fb.array([
-        this.fb.group({
-          description: ['', Validators.required]
-        }),
         this.fb.group({
           description: ['', Validators.required]
         })
@@ -215,8 +209,6 @@ export class CreateRecipeComponent implements OnInit {
       // Clear form arrays and add default items
       this.clearFormArrays();
       this.addIngredient();
-      this.addIngredient();
-      this.addStep();
       this.addStep();
       
       this.snackBar.open('Recipe cleared successfully!', 'Close', { duration: 3000 });

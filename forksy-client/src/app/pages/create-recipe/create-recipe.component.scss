@@ -4,6 +4,20 @@
   padding: 20px;
   background-color: #fafafa;
   min-height: 100vh;
+  
+  // Responsive container
+  @media (max-width: 1200px) {
+    max-width: 100%;
+    padding: 16px;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 8px;
+  }
 }
 
 // Header
@@ -13,12 +27,34 @@
   margin-bottom: 30px;
   padding: 20px 0;
   border-bottom: 1px solid #e0e0e0;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 20px;
+    padding: 16px 0;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 16px;
+    padding: 12px 0;
+  }
 }
 
 .header-actions {
   display: flex;
   gap: 16px;
   align-items: center;
+  
+  @media (max-width: 768px) {
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 8px;
+    flex-direction: column;
+    width: 100%;
+  }
 }
 
 .action-btn {
@@ -36,6 +72,18 @@
   &:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 12px 16px;
+    font-size: 0.85rem;
+    width: 100%;
+    justify-content: center;
   }
   
   // Clear button styling
@@ -72,12 +120,35 @@
   grid-template-columns: 1fr 2fr;
   gap: 40px;
   align-items: start;
+  
+  // Responsive grid
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr 1.8fr;
+    gap: 32px;
+  }
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  @media (max-width: 768px) {
+    gap: 24px;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 20px;
+  }
 }
 
 // Left column - Image upload
 .left-column {
   position: sticky;
   top: 20px;
+  
+  @media (max-width: 1024px) {
+    position: static;
+  }
 }
 
 .image-upload-section {
@@ -85,6 +156,14 @@
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  
+  @media (max-width: 768px) {
+    border-radius: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    border-radius: 8px;
+  }
 }
 
 .image-upload-container {
@@ -99,6 +178,14 @@
   &:hover {
     transform: translateY(-4px) !important;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2) !important;
+  }
+  
+  @media (max-width: 768px) {
+    border-radius: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    border-radius: 8px;
   }
 }
 
@@ -252,6 +339,14 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
+  
+  @media (max-width: 768px) {
+    gap: 24px;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 20px;
+  }
 }
 
 // Recipe info section
@@ -272,6 +367,18 @@
     font-size: 1.5rem;
     font-weight: 700;
     color: #333;
+  }
+  
+  @media (max-width: 768px) {
+    input {
+      font-size: 1.3rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    input {
+      font-size: 1.2rem;
+    }
   }
 }
 
@@ -308,6 +415,18 @@
     font-size: 1rem;
     line-height: 1.6;
   }
+  
+  @media (max-width: 768px) {
+    textarea {
+      font-size: 0.95rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    textarea {
+      font-size: 0.9rem;
+    }
+  }
 }
 
 // Recipe sections
@@ -322,6 +441,14 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  
+  @media (max-width: 768px) {
+    gap: 16px;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 12px;
+  }
 }
 
 .section-title {
@@ -331,6 +458,14 @@
   margin: 0;
   padding-bottom: 10px;
   border-bottom: 2px solid #835400;
+  
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+  }
 }
 
 .ration-field {
@@ -367,6 +502,14 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  
+  @media (max-width: 768px) {
+    gap: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 10px;
+  }
 }
 
 .ingredient-item {
@@ -379,6 +522,16 @@
   border-radius: 12px;
   border: 1px solid #e0e0e0;
   transition: all 0.3s ease;
+  
+  @media (max-width: 768px) {
+    gap: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 8px;
+    flex-direction: column;
+    align-items: stretch;
+  }
   
   &:hover {
     background-color: #fff3e0;
@@ -393,9 +546,13 @@
 }
 
 .ingredient-field {
-  width: 100%;
+  flex: 1;
   
   ::ng-deep .mat-mdc-form-field {
+    width: 100%;
+  }
+  
+  @media (max-width: 480px) {
     width: 100%;
   }
 }
@@ -410,6 +567,7 @@
 .more-options {
   color: #666;
   transition: all 0.3s ease;
+  flex-shrink: 0;
   
   &:hover {
     color: #eba642;
@@ -456,6 +614,14 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  
+  @media (max-width: 768px) {
+    gap: 16px;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 12px;
+  }
 }
 
 .time-field {
@@ -481,6 +647,14 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  
+  @media (max-width: 768px) {
+    gap: 20px;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 16px;
+  }
 }
 
 .step-item {
@@ -488,6 +662,16 @@
   flex-direction: column;
   gap: 16px;
   padding: 20px;
+  
+  @media (max-width: 768px) {
+    padding: 16px;
+    gap: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 12px;
+    gap: 10px;
+  }
   background-color: #f8f9fa;
   border-radius: 12px;
   border: 1px solid #e0e0e0;
@@ -497,6 +681,15 @@
   display: flex;
   align-items: flex-start;
   gap: 16px;
+  
+  @media (max-width: 768px) {
+    gap: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
 .step-number {
@@ -511,6 +704,18 @@
   font-weight: 700;
   font-size: 1.2rem;
   flex-shrink: 0;
+  
+  @media (max-width: 768px) {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
 }
 
 .step-field {
@@ -781,3 +986,165 @@
 }
 
 .flex-1 { flex: 1; }
+
+// Step image upload styles
+.step-image-upload {
+  margin-top: 16px;
+}
+
+.step-image-container {
+  position: relative;
+  width: 100%;
+  min-height: 120px;
+  border: 2px dashed #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  
+  &:hover {
+    border-color: #835400;
+    background-color: #f8f9fa;
+  }
+  
+  &.has-image {
+    border: 2px solid #835400;
+    min-height: 150px;
+  }
+}
+
+.step-image-preview {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.step-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  
+  .step-image-container:hover & {
+    opacity: 1;
+  }
+}
+
+.remove-step-image,
+.change-step-image {
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.step-upload-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+  cursor: pointer;
+}
+
+.step-file-input {
+  display: none;
+}
+
+.step-upload-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  
+  &:hover {
+    color: #835400;
+  }
+  
+  mat-icon {
+    font-size: 2rem;
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  span {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+}
+
+// Extra info card styles
+.extra-info-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  margin-top: 24px;
+  
+  @media (max-width: 768px) {
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 16px;
+    margin-top: 16px;
+  }
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.row-2 {
+  display: flex;
+  gap: 16px;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+.flex-1 { 
+  flex: 1; 
+}
+
+// Add step button
+.add-step-btn {
+  margin-top: 16px;
+  color: #835400;
+  border: 1px solid #835400;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: #835400;
+    color: white;
+  }
+  
+  mat-icon {
+    margin-right: 8px;
+  }
+}

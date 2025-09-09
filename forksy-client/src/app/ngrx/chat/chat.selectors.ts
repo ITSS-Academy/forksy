@@ -77,7 +77,7 @@ export const selectUnreadCounts = createSelector(
 
 export const selectUnreadCountForChat = createSelector(
   selectUnreadCounts,
-  (unreadCounts, chatId: string) => unreadCounts[chatId] || 0
+  (unreadCounts: any, chatId: string) => unreadCounts[chatId] || 0
 );
 
 export const selectTotalUnreadCount = createSelector(
