@@ -71,18 +71,11 @@ export class CreateRecipeComponent implements OnInit {
       cookingTime: ['1h 30m', Validators.required],
       ingredients: this.fb.array([
         this.fb.group({
-          name: ['', Validators.required],
-          amount: ['', Validators.required]
-        }),
-        this.fb.group({
-          name: ['', Validators.required],
-        amount: ['', Validators.required]
+          name: ['', Validators.required]
+
         })
       ]),
       steps: this.fb.array([
-        this.fb.group({
-          description: ['', Validators.required]
-        }),
         this.fb.group({
           description: ['', Validators.required]
         })
@@ -136,14 +129,52 @@ export class CreateRecipeComponent implements OnInit {
     this.steps.removeAt(index);
   }
 
+  clearFormArrays() {
+    // Clear ingredients array
+    while (this.ingredients.length !== 0) {
+      this.ingredients.removeAt(0);
+    }
+
+    // Clear steps array
+    while (this.steps.length !== 0) {
+      this.steps.removeAt(0);
+    }
+  }
+
   onMainImageUpload(event: any) {
     const file = event.target.files[0];
     if (file) {
+      // Validate file size (10MB limit)
+      if (file.size > 10 * 1024 * 1024) {
+        this.snackBar.open('File size must be less than 10MB', 'Close', { duration: 3000 });
+        return;
+      }
+      
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        this.snackBar.open('Please select a valid image file', 'Close', { duration: 3000 });
+        return;
+      }
+      
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.mainImage = e.target.result;
       };
       reader.readAsDataURL(file);
+    }
+  }
+
+  triggerImageUpload() {
+    const fileInput = document.getElementById('mainImageInput') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
+
+  triggerStepImageUpload(stepIndex: number) {
+    const fileInput = document.getElementById(`stepImageInput${stepIndex}`) as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
     }
   }
 
@@ -158,10 +189,29 @@ export class CreateRecipeComponent implements OnInit {
     }
   }
 
-  deleteRecipe() {
-    if (confirm('Are you sure you want to delete this recipe?')) {
-      this.snackBar.open('Recipe deleted.', 'Close', { duration: 3000 });
-      this.router.navigate(['/my-recipe']);
+  clearRecipe() {
+    if (confirm('Are you sure you want to clear all recipe information?')) {
+      // Reset form to initial state
+      this.recipeForm.reset();
+      this.recipeForm.patchValue({
+        difficulty: 'medium',
+        servings: 2,
+        cookingTime: '1h 30m'
+      });
+      
+      // Clear images
+      this.mainImage = null;
+      this.stepImages = {};
+      
+      // Reset servings counter
+      this.servings = 2;
+      
+      // Clear form arrays and add default items
+      this.clearFormArrays();
+      this.addIngredient();
+      this.addStep();
+      
+      this.snackBar.open('Recipe cleared successfully!', 'Close', { duration: 3000 });
     }
   }
 
@@ -174,7 +224,6 @@ export class CreateRecipeComponent implements OnInit {
         description: formValue.description,
         originCountry: formValue.originCountry,
         difficulty: formValue.difficulty,
-        note: formValue.note,
         servings: this.servings,
         cookingTime: formValue.cookingTime,
         ingredients: formValue.ingredients,

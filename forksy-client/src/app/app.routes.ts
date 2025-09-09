@@ -43,15 +43,11 @@ export const routes: Routes = [
   },
   {
     path:'update-recipe',
-    loadComponent: () => import('../app/pages/update-recipe/update-recipe.component').then(m => m.UpdateRecipeComponent),
+    loadComponent: ()=> import('../app/pages/update-recipe/update-recipe.component').then(m => m.UpdateRecipeComponent),
   },
   {
     path:'about',
-    loadComponent: () => import('../app/pages/about/about.component').then(m => m.AboutComponent),
-  },
-  {
-    path:'**',
-    redirectTo: ''
+    loadComponent: () => import('../app/pages/about/about.component').then(m => m.AboutComponent)
   }
 
 ];
