@@ -1,0 +1,287 @@
+.about-header {
+    .about-navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 32px;
+        background: #fff;
+
+        .site-logo {
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #222;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-links .active {
+            color: #eba642;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+        }
+    }
+
+    .about-banner {
+        position: relative;
+
+        .banner-images {
+            display: flex;
+
+            img {
+                width: 25%;
+                height: 120px;
+                object-fit: cover;
+            }
+        }
+
+        .banner-text {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+
+            h1 {
+                font-size: 48px;
+                color: #eba642;
+                margin: 0;
+            }
+
+            p {
+                font-size: 18px;
+                color: #222;
+                margin-top: 8px;
+            }
+        }
+    }
+}
+.about-main {
+    .about-intro {
+        display: flex;
+        align-items: flex-start;
+        gap: 32px;
+        margin: 32px 0;
+
+        .intro-img {
+            width: 340px;
+            border-radius: 16px;
+        }
+
+        .intro-text {
+            flex: 1;
+            font-size: 17px;
+            color: #222;
+        }
+
+        .highlight {
+            color: #eba642;
+            font-weight: 500;
+        }
+
+        .hexagon-img {
+            width: 340px;
+        }
+    }
+
+    .feedback-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 48px 0;
+
+        .feedback-modal {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+            padding: 32px;
+            width: 450px;
+            height: 500px;
+
+            .feedback-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-weight: 600;
+                font-size: 18px;
+                margin-bottom: 16px;
+            }
+
+            .feedback-body {
+                h2 {
+                    font-size: 22px;
+                    margin-bottom: 8px;
+                }
+
+                p {
+                    color: #666;
+                    margin-bottom: 16px;
+                }
+
+                .feedback-emojis {
+                    justify-content: center;
+                    display: flex;
+                    gap: 16px;
+                    margin-bottom: 22px;
+                }
+
+                textarea {
+                    width: 100%;
+                    min-height: 120px;
+                    border-radius: 8px;
+                    border: 1px solid #e0e0e0;
+                    padding: 12px;
+                    margin-bottom: 16px;
+                    font-size: 18px;
+                }
+
+                .submit-btn {
+                    width: 100%;
+                    background: #4ecb71;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}
+.about-intro-flex {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 40px;
+  margin: 32px 0;
+}
+
+.intro-img {
+  width: 420px;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.intro-text {
+  flex: 1;
+  font-size: 18px;
+  color: #222;
+  margin: 0 24px;
+  p {
+    margin: 0;
+    line-height: 1.7;
+  }
+  .highlight-green {
+    color: #4ecb71;
+    font-weight: 500;
+  }
+}
+
+.hexagon-img {
+  width: 420px;
+  max-width: 100%;
+  margin-left: 24px;
+}
+.about-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.about-intro,
+.about-intro-flex {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  margin: 40px 0;
+}
+
+.intro-text {
+  flex: 1;
+  font-size: 18px;
+  color: #222;
+  p {
+    margin: 0;
+    line-height: 1.7;
+  }
+  .highlight,
+  .highlight-green {
+    color: #4ecb71;
+    font-weight: 500;
+  }
+}
+
+.intro-img,
+.hexagon-img {
+  width: 400px;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.primary-title {
+    font-size: 48px;
+    color: #eba642;
+    margin: 0;
+}
+.bg1-banner {
+  background-image: url('https://exotrails.com/wp-content/uploads/2024/11/vietnamese-food-thumb-1024x682-01-08-2024.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  border-radius: 16px;
+}
+.bg2-banner {
+  position: relative;
+  width: 100%;
+  min-height: 600px;
+  background-image: url('https://store.longphuong.vn/wp-content/uploads/2023/09/bua-com-gia-dinh-mien-nam-35.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.feedback-section {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.feedback-modal {
+  z-index: 3;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  padding: 32px;
+  width: 400px;
+}
+.feedback-emojis {
+    justify-content: center;
+    display: flex;
+    gap: 16px;
+    margin-bottom: 22px;
+
+    button, img {
+        width: 48px;
+        height: 48px;
+    }
+    img {
+        object-fit: contain;
+    }
+}

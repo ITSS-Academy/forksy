@@ -37,6 +37,7 @@ export class AppComponent {
         }
         console.log('User is signed in.', user);
         this.store.dispatch(AuthActions.storeCurrentUser({currentUser:user, idToken: idToken}))
+        this.store.dispatch(AuthActions.getMineProfile({idToken: idToken}));
       } else {
         console.log('No user is signed in.');
       }

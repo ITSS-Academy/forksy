@@ -3,20 +3,39 @@
    <img src="logo.png"/>
     Forksy
   </span>
+  
+  <!-- Mobile menu button -->
+  <button class="mobile-menu-btn" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen">
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+  </button>
+  
   <span class="spacer"></span>
-  <nav class="nav-links">
+  
+  <!-- Desktop navigation -->
+  <nav class="nav-links desktop-nav">
     <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
     <a mat-button routerLink="/search-recipe" routerLinkActive="active">Search</a>
     <a mat-button routerLink="/about" routerLinkActive="active">About Us</a>
     @if ((auth$ | async)?.currentUser?.uid) {
-
       <a mat-button routerLink="/message" routerLinkActive="active">Message</a>
       <a mat-button routerLink="/my-recipe" routerLinkActive="active">My Recipe</a>
       <a mat-button routerLink="/my-favorite-recipe" routerLinkActive="active">My Favorite</a>
 
       <!-- Avatar with dropdown menu -->
       <button class="avatar-btn" [matMenuTriggerFor]="userMenu">
-        <mat-icon>account_circle</mat-icon>
+        @if ((auth$ | async)?.currentUser?.photoURL) {
+          <img [src]="(auth$ | async)?.currentUser?.photoURL" 
+               [alt]="(auth$ | async)?.currentUser?.displayName || 'User Avatar'"
+               class="user-avatar">
+        } @else if ((auth$ | async)?.mineProfile?.avatar_url) {
+          <img [src]="(auth$ | async)?.mineProfile?.avatar_url" 
+               [alt]="(auth$ | async)?.mineProfile?.username || 'User Avatar'"
+               class="user-avatar">
+        } @else {
+          <mat-icon>account_circle</mat-icon>
+        }
       </button>
       <mat-menu #userMenu="matMenu">
         <button mat-menu-item routerLink="/profile">
@@ -37,3 +56,55 @@
     }
   </nav>
 </mat-toolbar>
+
+<!-- Mobile navigation overlay -->
+<div class="mobile-nav-overlay" [class.active]="isMobileMenuOpen" (click)="closeMobileMenu()">
+  <nav class="mobile-nav" (click)="$event.stopPropagation()">
+    <div class="mobile-nav-header">
+      <span class="mobile-logo" style="font-family: 'Sail', system-ui;">
+        <img src="logo.png"/>
+        Forksy
+      </span>
+      <div class="mobile-header-actions">
+        @if ((auth$ | async)?.currentUser?.uid) {
+          <div class="mobile-user-info">
+            @if ((auth$ | async)?.currentUser?.photoURL) {
+              <img [src]="(auth$ | async)?.currentUser?.photoURL" 
+                   [alt]="(auth$ | async)?.currentUser?.displayName || 'User Avatar'"
+                   class="mobile-user-avatar">
+            } @else if ((auth$ | async)?.mineProfile?.avatar_url) {
+              <img [src]="(auth$ | async)?.mineProfile?.avatar_url" 
+                   [alt]="(auth$ | async)?.mineProfile?.username || 'User Avatar'"
+                   class="mobile-user-avatar">
+            } @else {
+              <mat-icon class="mobile-avatar-icon">account_circle</mat-icon>
+            }
+            <span class="mobile-username">
+              {{ (auth$ | async)?.currentUser?.displayName || (auth$ | async)?.mineProfile?.username || 'User' }}
+            </span>
+          </div>
+        }
+        <button class="close-btn" (click)="closeMobileMenu()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+    
+    <div class="mobile-nav-links">
+      <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMobileMenu()">Home</a>
+      <a mat-button routerLink="/search-recipe" routerLinkActive="active" (click)="closeMobileMenu()">Search</a>
+      <a mat-button routerLink="/about" routerLinkActive="active" (click)="closeMobileMenu()">About Us</a>
+      
+      @if ((auth$ | async)?.currentUser?.uid) {
+        <a mat-button routerLink="/message" routerLinkActive="active" (click)="closeMobileMenu()">Message</a>
+        <a mat-button routerLink="/my-recipe" routerLinkActive="active" (click)="closeMobileMenu()">My Recipe</a>
+        <a mat-button routerLink="/my-favorite-recipe" routerLinkActive="active" (click)="closeMobileMenu()">My Favorite</a>
+        <a mat-button routerLink="/profile" (click)="closeMobileMenu()">Profile</a>
+        <a mat-button routerLink="/settings" (click)="closeMobileMenu()">Settings</a>
+        <button mat-button (click)="logout(); closeMobileMenu()">Logout</button>
+      } @else {
+        <button mat-button color="accent" (click)="login(); closeMobileMenu()">Login</button>
+      }
+    </div>
+  </nav>
+</div>
