@@ -2,13 +2,18 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full'
+  },
+  {
     path: 'home',
     loadComponent: () => import('../app/pages/home/home.component').then(m => m.HomeComponent)
 
   },
   {
-    path:'chat',
-    loadComponent: () => import('../app/pages/chat/chat.component').then(m => m.ChatComponent)
+    path:'message',
+    loadComponent: () => import('../app/pages/message/message.component').then(m => m.MessageComponent)
   },
   {
     path:'profile',
@@ -26,14 +31,14 @@ export const routes: Routes = [
   },
   {
     path:'recipe-detail/:id',
-    loadComponent: () => import('../app/pages/my-recipe/my-recipe.component').then(m => m.MyRecipeComponent)
+    loadComponent: () => import('../app/pages/recipe-detail/recipe-detail.component').then(m => m.RecipeDetailComponent)
   },
   {
     path:'search-recipe',
     loadComponent: () => import('../app/pages/search-recipe/search-recipe.component').then(m => m.SearchRecipeComponent)
   },
   {
-    path:'post-recipe',
+    path:'create-recipe',
     loadComponent: () => import('../app/pages/create-recipe/create-recipe.component').then(m => m.CreateRecipeComponent),
   },
   {
@@ -43,6 +48,10 @@ export const routes: Routes = [
   {
     path:'about',
     loadComponent: () => import('../app/pages/about/about.component').then(m => m.AboutComponent),
+  },
+  {
+    path:'**',
+    redirectTo: ''
   }
 
 ];

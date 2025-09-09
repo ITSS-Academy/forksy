@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Forksy": {
+    "forksy": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/Forksy",
+            "outputPath": "dist/forksy",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -64,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Forksy:build:production"
+              "buildTarget": "forksy:build:production"
             },
             "development": {
-              "buildTarget": "Forksy:build:development"
+              "buildTarget": "forksy:build:development"
             }
           },
           "defaultConfiguration": "development"
